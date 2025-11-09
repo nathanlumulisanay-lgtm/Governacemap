@@ -203,5 +203,43 @@
       showAlert(`${name} entered as ${zones[type]} type.`);
     }
   </script>
+
+  <!-- ABOUT & LEGEND PANEL -->
+<div id="aboutPanel" style="
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6); color:#1e293b;
+  display:none; align-items:center; justify-content:center;">
+  <div style="
+    background:white; max-width:500px; border-radius:12px;
+    padding:1.5rem; box-shadow:0 4px 12px rgba(0,0,0,0.25);">
+    <h2 style="color:#4338ca;">About GovernanceMap™</h2>
+    <p><strong>The Governance Dimension</strong> classifies organizations by how they capture and share value:</p>
+    <ul>
+      <li><b>Private</b> – Closed ownership, proprietary IP (e.g. Apple, Tesla)</li>
+      <li><b>Hybrid</b> – Shared platforms, controlled participation (e.g. Visa, Airbnb)</li>
+      <li><b>Commons</b> – Open collaboration and collective value (e.g. Wikipedia, Linux)</li>
+      <li><b>Protocol</b> – Fully decentralized, rule-based systems (e.g. Bitcoin, Ethereum)</li>
+    </ul>
+    <p><b>Alerts</b> signal governance shifts or collaborations between these models.</p>
+    <p style="font-size:0.9rem;color:#6b7280;margin-top:1rem;">Created by <b>Nathan Lumulisanay</b> · 2025 · CC BY-SA 4.0</p>
+    <button onclick="toggleAbout()" style="
+      margin-top:1rem; background:#6366f1; color:white;
+      border:none; border-radius:8px; padding:0.5rem 1rem;">Close</button>
+  </div>
+</div>
+
+<!-- INFO BUTTON -->
+<button onclick="toggleAbout()" style="
+  position:fixed; top:1rem; right:1rem; background:#6366f1;
+  color:white; border:none; border-radius:50%; width:40px; height:40px;
+  font-weight:bold; font-size:1.2rem; cursor:pointer;">?</button>
+
+<script>
+function toggleAbout(){
+  const panel=document.getElementById('aboutPanel');
+  panel.style.display = panel.style.display==='flex' ? 'none' : 'flex';
+}
+</script>
+  
 </body>
 </html>
