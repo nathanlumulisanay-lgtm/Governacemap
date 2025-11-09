@@ -241,5 +241,64 @@ function toggleAbout(){
 }
 </script>
   
+  <!-- GOVERNANCE INDEX CALCULATOR -->
+<div id="calcPanel" style="
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center;">
+  <div style="background:white; max-width:520px; border-radius:12px; padding:1.5rem;">
+    <h2 style="color:#4338ca;">Governance Index Calculator</h2>
+    <form id="govForm">
+      <p>Answer 1–5 (1 = Closed / 5 = Open):</p>
+      <label>1. Ownership openness</label><br><input type="number" name="q1" min="1" max="5" required><br><br>
+      <label>2. Decision participation</label><br><input type="number" name="q2" min="1" max="5" required><br><br>
+      <label>3. Partner/user control sharing</label><br><input type="number" name="q3" min="1" max="5" required><br><br>
+      <label>4. Transparency & reporting</label><br><input type="number" name="q4" min="1" max="5" required><br><br>
+      <label>5. Knowledge/IP reusability</label><br><input type="number" name="q5" min="1" max="5" required><br><br>
+      <button type="submit" style="
+        background:#6366f1;color:white;border:none;border-radius:8px;
+        padding:0.5rem 1rem;">Calculate</button>
+    </form>
+
+    <div id="calcResult" style="display:none; margin-top:1rem;">
+      <h3 style="color:#4338ca;">Result</h3>
+      <p id="scoreText"></p>
+      <p id="recommendation" style="color:#475569;"></p>
+      <button onclick="toggleCalc()" style="
+        margin-top:1rem;background:#6366f1;color:white;border:none;
+        border-radius:8px;padding:0.5rem 1rem;">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- OPEN CALCULATOR BUTTON -->
+<button onclick="toggleCalc()" style="
+  position:fixed; bottom:1rem; right:1rem; background:#7c3aed;
+  color:white; border:none; border-radius:50%; width:50px; height:50px;
+  font-weight:bold; font-size:1.2rem; cursor:pointer;">⚙️</button>
+
+<script>
+function toggleCalc(){
+  const c=document.getElementById('calcPanel');
+  c.style.display = c.style.display==='flex' ? 'none':'flex';
+}
+document.getElementById('govForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const data=new FormData(this);
+  let sum=0;
+  for(let v of data.values()) sum += parseInt(v);
+  const avg=sum/5;
+  const score = Math.round(avg*20);
+  let position, rec;
+  if(score < 30){ position="Private"; rec="High control, low openness — ideal for proprietary strategy."; }
+  else if(score < 50){ position="Hybrid"; rec="Balanced governance — suitable for platform collaboration."; }
+  else if(score < 70){ position="Commons"; rec="Collaborative and transparent — supports open ecosystems."; }
+  else { position="Protocol"; rec="Fully decentralized model — leverage trustless automation."; }
+  document.getElementById('scoreText').innerHTML = 
+    `<b>Governance Index:</b> ${score}/100 (${position})`;
+  document.getElementById('recommendation').textContent = rec;
+  document.getElementById('calcResult').style.display='block';
+});
+</script>
+  
 </body>
 </html>
