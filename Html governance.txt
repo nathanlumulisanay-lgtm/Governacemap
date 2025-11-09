@@ -1,0 +1,17 @@
+You are a front-end architect.  
+Generate a full responsive HTML5 prototype called "GovernanceMap™ – Competitive Intelligence Platform".
+
+Requirements:
+- Use plain HTML, CSS, and minimal inline JS (no frameworks).
+- Include sidebar navigation, onboarding screens (3 steps), and final dashboard.
+- Dashboard shows:
+  - 3 stat cards
+  - Interactive governance map (Private–Hybrid–Commons–Protocol)
+  - Alerts panel with 3 example alerts
+  - Competitor list with governance badges
+- Styling: modern, clean, tailwind-like (blue / purple accent)
+- Language: English
+- Include smooth transitions between onboarding screens.
+- Filename: **index.html**
+
+At the end, output the complete HTML file so I can copy it directly into GitHub.
