@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GovernanceMap™ – Competitive Intelligence Platform</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:#f8fafc;
+      color:#1e293b;
+      display:flex;
+      height:100vh;
+      overflow:hidden;
+    }
+    .sidebar {
+      width:260px; background:#0f172a; color:white;
+      display:flex; flex-direction:column; padding:24px;
+    }
+    .logo {
+      font-size:22px; font-weight:700;
+      margin-bottom:32px;
+      background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .nav-item {
+      padding:10px 14px; border-radius:8px;
+      cursor:pointer; transition:background 0.2s;
+      margin-bottom:6px;
+    }
+    .nav-item:hover { background:#1e293b; }
+    .nav-item.active { background:#667eea; }
+    .main {
+      flex:1; overflow-y:auto; background:white;
+      border-top-left-radius:16px; border-bottom-left-radius:16px;
+    }
+    header {
+      padding:24px 40px; border-bottom:1px solid #e2e8f0;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    header h1 { font-size:26px; font-weight:600; }
+    .btn-primary {
+      background:linear-gradient(135deg,#667eea,#764ba2);
+      color:white; border:none; padding:10px 20px;
+      border-radius:8px; cursor:pointer; font-weight:600;
+    }
+    .btn-primary:hover { opacity:0.9; }
+    .content { padding:40px; }
+    .stats {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:20px; margin-bottom:32px;
+    }
+    .card {
+      background:#f9fafb; border-radius:12px;
+      padding:20px; text-align:center;
+      box-shadow:0 1px 3px rgba(0,0,0,0.1);
+    }
+    .card h3 { color:#667eea; margin-bottom:8px; }
+    .map {
+      background:#f1f5f9; border-radius:12px; padding:20px;
+      margin-bottom:32px; height:300px; display:flex;
+      justify-content:center; align-items:center; color:#64748b;
+    }
+    .alerts, .competitors {
+      background:#f9fafb; border-radius:12px;
+      padding:24px; margin-bottom:24px;
+    }
+    .alerts h2, .competitors h2 { margin-bottom:12px; font-size:18px; }
+    .alert { border-left:4px solid #667eea; padding-left:12px; margin-bottom:12px; }
+    .badge {
+      display:inline-block; padding:4px 10px; border-radius:6px;
+      font-size:12px; font-weight:600;
+    }
+    .private { background:#3b82f615; color:#3b82f6; }
+    .hybrid { background:#8b5cf615; color:#8b5cf6; }
+    .commons { background:#10b98115; color:#10b981; }
+    .protocol { background:#f59e0b15; color:#f59e0b; }
+    @media(max-width:768px){
+      body{flex-direction:column;}
+      .sidebar{width:100%;flex-direction:row;overflow-x:auto;}
+      .main{border-radius:0;}
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">GovernanceMap™</div>
+    <div class="nav-item active">Dashboard</div>
+    <div class="nav-item">Governance Map</div>
+    <div class="nav-item">Competitors</div>
+    <div class="nav-item">Alerts</div>
+  </div>
+  <div class="main">
+    <header>
+      <h1>Dashboard</h1>
+      <button class="btn-primary">+ Add Competitor</button>
+    </header>
+    <div class="content">
+      <div class="stats">
+        <div class="card">
+          <h3>Competitors</h3>
+          <p><strong>5</strong> tracked</p>
+        </div>
+        <div class="card">
+          <h3>Alerts</h3>
+          <p><strong>3</strong> active</p>
+        </div>
+        <div class="card">
+          <h3>Coverage</h3>
+          <p><strong>87%</strong> mapped</p>
+        </div>
+      </div>
+
+      <div class="map">
+        <p>🗺️ Governance Landscape Map (Private – Hybrid – Commons – Protocol)</p>
+      </div>
+
+      <div class="alerts">
+        <h2>Recent Alerts</h2>
+        <div class="alert">
+          <strong>🚨 Notion launches "Notion for Communities"</strong>
+          <p>Shift detected toward Commons governance model.</p>
+        </div>
+        <div class="alert">
+          <strong>💡 Recommendation:</strong>
+          <p>Consider Hybrid transition to align with market trend.</p>
+        </div>
+        <div class="alert">
+          <strong>📊 Monday.com files B-Corp certification</strong>
+          <p>Stakeholder orientation confirmed – industry signal rising.</p>
+        </div>
+      </div>
+
+      <div class="competitors">
+        <h2>Tracked Competitors</h2>
+        <p><span class="badge private">Asana</span>
+           <span class="badge hybrid">Monday.com</span>
+           <span class="badge hybrid">Trello</span>
+           <span class="badge commons">Notion</span>
+           <span class="badge private">ClickUp</span></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
