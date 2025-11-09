@@ -241,64 +241,81 @@ function toggleAbout(){
 }
 </script>
   
-  <!-- GOVERNANCE INDEX CALCULATOR -->
+<!-- GOVERNANCE INDEX CALCULATOR v2.0 (Weighted Reflective Engine) -->
 <div id="calcPanel" style="
   position:fixed; top:0; left:0; width:100%; height:100%;
-  background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center;">
-  <div style="background:white; max-width:520px; border-radius:12px; padding:1.5rem;">
-    <h2 style="color:#4338ca;">Governance Index Calculator</h2>
+  background:rgba(0,0,0,0.6); display:none; z-index:1000;
+  align-items:center; justify-content:center;">
+  <div style="background:white; max-width:450px; width:90%; padding:25px; border-radius:16px;
+              box-shadow:0 8px 20px rgba(0,0,0,0.15); overflow-y:auto; max-height:90vh;">
+    <h2 style="color:#4a35d5; margin-bottom:12px;">Governance Index Calculator v2.0</h2>
+    <p>Answer 1–5 (1 = Closed / 5 = Open). Weighted scoring reflects impact per dimension.</p>
+
     <form id="govForm">
-      <p>Answer 1–5 (1 = Closed / 5 = Open):</p>
-      <label>1. Ownership openness</label><br><input type="number" name="q1" min="1" max="5" required><br><br>
-      <label>2. Decision participation</label><br><input type="number" name="q2" min="1" max="5" required><br><br>
-      <label>3. Partner/user control sharing</label><br><input type="number" name="q3" min="1" max="5" required><br><br>
-      <label>4. Transparency & reporting</label><br><input type="number" name="q4" min="1" max="5" required><br><br>
-      <label>5. Knowledge/IP reusability</label><br><input type="number" name="q5" min="1" max="5" required><br><br>
-      <button type="submit" style="
-        background:#6366f1;color:white;border:none;border-radius:8px;
-        padding:0.5rem 1rem;">Calculate</button>
+      <label>1. Ownership openness (25%)</label><br>
+      <input type="number" name="q1" min="1" max="5" required><br>
+      <small style="color:#666;">Measures control over assets & IP rights — defines proprietary strength.</small><br><br>
+
+      <label>2. Decision participation (20%)</label><br>
+      <input type="number" name="q2" min="1" max="5" required><br>
+      <small style="color:#666;">Assesses inclusivity in strategic or operational decision-making.</small><br><br>
+
+      <label>3. Partner/user control sharing (20%)</label><br>
+      <input type="number" name="q3" min="1" max="5" required><br>
+      <small style="color:#666;">Evaluates how power and control extend beyond the organization’s boundary.</small><br><br>
+
+      <label>4. Transparency & reporting (20%)</label><br>
+      <input type="number" name="q4" min="1" max="5" required><br>
+      <small style="color:#666;">Captures accountability and visibility of governance mechanisms.</small><br><br>
+
+      <label>5. Knowledge/IP reusability (15%)</label><br>
+      <input type="number" name="q5" min="1" max="5" required><br>
+      <small style="color:#666;">Reflects openness of innovation, data, and resource circulation.</small><br><br>
+
+      <button type="button" onclick="calculateWeightedIndex()" 
+              style="background:#4a35d5; color:white; border:none; padding:10px 18px;
+                     border-radius:10px; font-weight:bold;">Calculate</button>
     </form>
 
-    <div id="calcResult" style="display:none; margin-top:1rem;">
-      <h3 style="color:#4338ca;">Result</h3>
-      <p id="scoreText"></p>
-      <p id="recommendation" style="color:#475569;"></p>
-      <button onclick="toggleCalc()" style="
-        margin-top:1rem;background:#6366f1;color:white;border:none;
-        border-radius:8px;padding:0.5rem 1rem;">Close</button>
+    <div id="result" style="margin-top:20px; display:none;">
+      <h3>Result</h3>
+      <p id="govScore" style="font-size:1.1em; font-weight:bold;"></p>
+      <div id="barContainer" style="margin-top:10px; background:#eee; border-radius:10px; height:16px; position:relative;">
+        <div id="bar" style="background:linear-gradient(90deg,#5a38e3,#4fa6ff,#5dd39e,#ffd15c);
+                             width:0%; height:100%; border-radius:10px; transition:width 1s;"></div>
+      </div>
+      <p id="govText" style="margin-top:10px;"></p>
     </div>
+
+    <button onclick="toggleCalc()" 
+            style="margin-top:18px; background:#eee; border:none; padding:8px 14px; border-radius:10px;">Close</button>
   </div>
 </div>
 
-<!-- OPEN CALCULATOR BUTTON -->
-<button onclick="toggleCalc()" style="
-  position:fixed; bottom:1rem; right:1rem; background:#7c3aed;
-  color:white; border:none; border-radius:50%; width:50px; height:50px;
-  font-weight:bold; font-size:1.2rem; cursor:pointer;">⚙️</button>
-
 <script>
 function toggleCalc(){
-  const c=document.getElementById('calcPanel');
-  c.style.display = c.style.display==='flex' ? 'none':'flex';
+  const p = document.getElementById('calcPanel');
+  p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
 }
-document.getElementById('govForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const data=new FormData(this);
-  let sum=0;
-  for(let v of data.values()) sum += parseInt(v);
-  const avg=sum/5;
-  const score = Math.round(avg*20);
-  let position, rec;
-  if(score < 30){ position="Private"; rec="High control, low openness — ideal for proprietary strategy."; }
-  else if(score < 50){ position="Hybrid"; rec="Balanced governance — suitable for platform collaboration."; }
-  else if(score < 70){ position="Commons"; rec="Collaborative and transparent — supports open ecosystems."; }
-  else { position="Protocol"; rec="Fully decentralized model — leverage trustless automation."; }
-  document.getElementById('scoreText').innerHTML = 
-    `<b>Governance Index:</b> ${score}/100 (${position})`;
-  document.getElementById('recommendation').textContent = rec;
-  document.getElementById('calcResult').style.display='block';
-});
+
+function calculateWeightedIndex(){
+  const form = document.getElementById('govForm');
+  const q = Array.from(form.querySelectorAll('input')).map(i=>parseFloat(i.value)||0);
+
+  const weights = [0.25,0.20,0.20,0.20,0.15];
+  let total = 0;
+  for(let i=0;i<q.length;i++){ total += q[i]*weights[i]; }
+
+  const score = Math.round(total*20); // normalize to 100
+  let category='', text='';
+  if(score<30){ category='Private'; text='Closed governance — proprietary and controlled.'; }
+  else if(score<50){ category='Hybrid'; text='Balanced governance — suitable for platform collaboration.'; }
+  else if(score<70){ category='Commons'; text='Collaborative governance — open and participatory.'; }
+  else { category='Protocol'; text='Rule-based or decentralized governance — high autonomy.'; }
+
+  document.getElementById('result').style.display='block';
+  document.getElementById('govScore').innerText=`Governance Index: ${score}/100 (${category})`;
+  document.getElementById('govText').innerText=text;
+  document.getElementById('bar').style.width=score+'%';
+}
 </script>
-  
-</body>
-</html>
